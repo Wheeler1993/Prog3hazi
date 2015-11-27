@@ -18,6 +18,8 @@ public class Main {
 		//System.out.println(i.getLocation());
 		JFrame fr = new JFrame();
 		fr.addKeyListener(ss);
+		fr.addKeyListener(d);
+		//fr.addKeyListener(new SpaceListener());
 		//fr.setBackground(new Color(1,0,1));
 		//fr.setLayout(new BorderLayout());
 		//fr.getContentPane().setLayout(null);
