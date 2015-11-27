@@ -8,26 +8,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.lang.Math;
 
 public class Drawer extends JPanel implements ActionListener, KeyListener{
-	ArrayList<Item> pics;
+	ArrayList<Item> enemys;
+	ArrayList<Item> bullets;
 	SpaceShip ship;
-	//ArrayList<Bullet> bullets;
 	Timer timer;
+	double n=100, i;
 	
 	public Drawer(ArrayList<Item> items, SpaceShip sh){
-		pics = items;
+		enemys = items;
 		ship=sh;
-		//bullets = new ArrayList<Bullet>();
-		setBackground(new Color(255,255,255));
-		//addKeyListener(new SpaceListener());
+		bullets = new ArrayList<Item>();
+		setBackground(new Color(0,255,255));
 		timer=new Timer(16, this);
 		timer.start();
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for(Item pic : pics){
+		for(Item pic : enemys){
+			g.drawImage(pic.pic, pic.x, pic.y, this);
+			//System.out.println(pic.x);
+			//System.out.println(pic.y);
+		}
+		for(Item pic : bullets){
 			g.drawImage(pic.pic, pic.x, pic.y, this);
 			//System.out.println(pic.x);
 			//System.out.println(pic.y);
@@ -42,7 +48,7 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 			switch(e.getKeyChar()){
 			case ' ': {
 					try {
-						pics.add(new Bullet(ship.x+10, ship.y+10, 5, 0, "bullet.gif"));
+						bullets.add(new Bullet(ship.x+10, ship.y+10, 5, 0, "bullet.gif"));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -50,36 +56,65 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 					//System.out.println("Space");
 				}break;
 			}
-			
 		}
 
 		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void keyReleased(KeyEvent e) {}
 
 		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void keyTyped(KeyEvent e) {}
 		
-	
+	void dropEnemys() throws IOException{
+		//System.out.println("remove");
+			int yy= (int) (Math.random()*600);
+			Enemy en = new Enemy(600, yy, -2, 0, "icon.jpg");
+			enemys.add(en);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		for(Item pic : pics){
+		++i;
+		if(i>n){
+			n-=1;
+		try {
+			dropEnemys();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		i=Math.random()*20;
+		}
+		for(Item pic : bullets){
 			pic.move();
 		}
-		ArrayList<Item> toremove = new ArrayList<Item>();
-		for(Item i : pics){
+		for(Item pic : enemys){
+			pic.move();
+		}
+		ArrayList<Item> toremovebullets = new ArrayList<Item>();
+		ArrayList<Item> toremoveenemys = new ArrayList<Item>();
+		for(Item i : enemys){
 			if(i.x>610 || i.y>610 || i.x<-10 || i.y<-10){
-				toremove.add(i);
-				//System.out.println("remove");
+				toremoveenemys.add(i);
 			}
 		}
-		pics.removeAll(toremove);
+		for(Item i : bullets){
+			for(Item j : enemys){
+			if(j.x>610 || j.y>610 || j.x<-20 || j.y<-20){
+				toremovebullets.add(i);}
+			else if(i.x>610 || i.y>610 || i.x<-10 || i.y<-10){
+				toremoveenemys.add(i);
+			}
+			else if(Math.abs(j.x-i.x)<20 && Math.abs(j.y+10-i.y)<30){
+				toremovebullets.add(i);
+				toremoveenemys.add(j);
+			}
+				//System.out.println("remove");
+			}
+			
+		}
+		bullets.removeAll(toremovebullets);
+		enemys.removeAll(toremoveenemys);
 		repaint();
 	}
 
