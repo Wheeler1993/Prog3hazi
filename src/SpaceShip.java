@@ -17,6 +17,7 @@ public class SpaceShip implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		//System.out.println("remove");
 		switch(e.getKeyChar()){
 		case 'a': x-=20; break;
 		case 'd': x+=20;break;

@@ -16,6 +16,7 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 	SpaceShip ship;
 	Timer timer;
 	double n=100, i;
+	int shooted=0;
 	
 	public Drawer(ArrayList<Item> items, SpaceShip sh){
 		enemys = items;
@@ -70,27 +71,17 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 			Enemy en = new Enemy(600, yy, -2, 0, "icon.jpg");
 			enemys.add(en);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		++i;
-		if(i>n){
-			n-=1;
-		try {
-			dropEnemys();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		i=Math.random()*20;
-		}
+	
+	void step(){
 		for(Item pic : bullets){
 			pic.move();
 		}
 		for(Item pic : enemys){
 			pic.move();
 		}
+	}
+	
+	void deleteItems(){
 		ArrayList<Item> toremovebullets = new ArrayList<Item>();
 		ArrayList<Item> toremoveenemys = new ArrayList<Item>();
 		for(Item i : enemys){
@@ -108,6 +99,7 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 			else if(Math.abs(j.x-i.x)<20 && Math.abs(j.y+10-i.y)<30){
 				toremovebullets.add(i);
 				toremoveenemys.add(j);
+				shooted++;
 			}
 				//System.out.println("remove");
 			}
@@ -115,6 +107,35 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 		}
 		bullets.removeAll(toremovebullets);
 		enemys.removeAll(toremoveenemys);
+	}
+	
+	void checkGameOver(){
+		for(Item j : enemys){
+			if(Math.abs(j.x-ship.x)<30 && Math.abs(j.y-ship.y)<30){
+				System.exit(0);
+			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		++i;
+		if(i>n){
+			n-=1;
+		try {
+			dropEnemys();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		i=Math.random()*20;
+		}
+		
+		step();
+		checkGameOver();
+		
+		deleteItems();
 		repaint();
 	}
 
