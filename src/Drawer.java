@@ -17,14 +17,18 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 	Timer timer;
 	double n=100, i;
 	int shooted=0;
+	Game fr;
+	//JFrame frr = new JFrame();
 	
-	public Drawer(ArrayList<Item> items, SpaceShip sh){
+	public Drawer(ArrayList<Item> items, SpaceShip sh, Game f){
 		enemys = items;
 		ship=sh;
+		fr=f;
 		bullets = new ArrayList<Item>();
-		setBackground(new Color(0,255,255));
+		setBackground(new Color(255,255,255));
 		timer=new Timer(16, this);
 		timer.start();
+		//fr.add(this);
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -42,7 +46,6 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 		g.drawImage(ship.pic, ship.x, ship.y, this);
 		
 	}
-
 
 		@Override
 		public void keyPressed(KeyEvent e) {
@@ -67,7 +70,7 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 		
 	void dropEnemys() throws IOException{
 		//System.out.println("remove");
-			int yy= (int) (Math.random()*600);
+			int yy= (int) (Math.random()*550);
 			Enemy en = new Enemy(600, yy, -2, 0, "icon.jpg");
 			enemys.add(en);
 	}
@@ -84,19 +87,14 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 	void deleteItems(){
 		ArrayList<Item> toremovebullets = new ArrayList<Item>();
 		ArrayList<Item> toremoveenemys = new ArrayList<Item>();
-		for(Item i : enemys){
-			if(i.x>610 || i.y>610 || i.x<-10 || i.y<-10){
-				toremoveenemys.add(i);
-			}
-		}
+		
 		for(Item i : bullets){
-			for(Item j : enemys){
-			if(j.x>610 || j.y>610 || j.x<-20 || j.y<-20){
-				toremovebullets.add(i);}
-			else if(i.x>610 || i.y>610 || i.x<-10 || i.y<-10){
-				toremoveenemys.add(i);
+			if(i.x>610 || i.y>610){
+				toremovebullets.add(i);
+				//System.out.println("remove");
 			}
-			else if(Math.abs(j.x-i.x)<20 && Math.abs(j.y+10-i.y)<30){
+			for(Item j : enemys){
+			if(Math.abs(j.x-i.x)<20 && Math.abs(j.y+10-i.y)<30){
 				toremovebullets.add(i);
 				toremoveenemys.add(j);
 				shooted++;
@@ -111,8 +109,13 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 	
 	void checkGameOver(){
 		for(Item j : enemys){
-			if(Math.abs(j.x-ship.x)<30 && Math.abs(j.y-ship.y)<30){
-				System.exit(0);
+			if(Math.abs(j.x-ship.x)<30 && Math.abs(j.y-ship.y)<30 || j.x<-20 || j.y<-20){
+				//System.out.println("remove");
+				//System.exit(0);
+				//fr.dispatchEvent(new WindowEvent(fr, WindowEvent.WINDOW_CLOSING));
+				fr.addHighScore(shooted);
+				timer.stop();
+				fr.fr.dispose();
 			}
 		}
 	}
@@ -121,7 +124,9 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 	public void actionPerformed(ActionEvent arg0) {
 		++i;
 		if(i>n){
+			if(n>40){
 			n-=1;
+			}
 		try {
 			dropEnemys();
 		} catch (IOException e) {
@@ -133,9 +138,8 @@ public class Drawer extends JPanel implements ActionListener, KeyListener{
 		}
 		
 		step();
-		checkGameOver();
-		
 		deleteItems();
+		checkGameOver();
 		repaint();
 	}
 

@@ -1,13 +1,10 @@
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-
 import javax.imageio.ImageIO;
 
 
-public class Item /*implements ActionListener*/{
+public class Item {
 	BufferedImage pic;
 	int x, y;
 	int dirx, diry;
@@ -23,12 +20,5 @@ public class Item /*implements ActionListener*/{
 		x+=dirx;
 		y+=diry;
 	}
-	
-	/*@Override
-	public void actionPerformed(ActionEvent arg0) {
-		x+=dirx;
-		y+=diry;
-		//System.out.println(x);
-	}*/
 	
 }

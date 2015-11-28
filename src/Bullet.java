@@ -6,7 +6,5 @@ public class Bullet extends Item {
 		super(xx, yy, dirxx, diryy, picc);
 		
 	}
-	
-	
 
 }
