@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Game{
-	//static Boolean quit = false;
 	JFrame fr;
 	JFrame addsc;
 	JPanel pan;
@@ -22,7 +21,6 @@ public class Game{
 	JButton highScores;
 	JButton add;
 	
-	JTextField hscore;
 	JTextField myhscore;
 	JTextField getName;
 	HighScores scores = new HighScores();
@@ -51,12 +49,7 @@ public class Game{
 	}
 	
 	void newGame(){
-		//fr.removeAll();
-		//fr.dispose();
 		fr=new JFrame("Game");
-		//init();
-		//pan.removeAll();
-		//init();
 		ArrayList<Item> items = new ArrayList<Item>();
 		SpaceShip ss = null;
 		try {
@@ -68,26 +61,20 @@ public class Game{
 		}
 		
 		Drawer d = new Drawer(items, ss, this);
-		//JFrame fr = new JFrame();
-		//pan=new Drawer(items, ss);
 		
 		fr.addKeyListener(ss);
-		//System.out.println("remove");
 		fr.addKeyListener(d);
 		
 		fr.setBounds(0, 0, 600, 600);
 		
 		fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//this.setLayout();
+		
 		fr.add(d);
 
-		//fr.revalidate();
-		//fr.repaint();
 		fr.setVisible(true);
 	}
 	
 	void addHighScore(int score){
-		//init();
 		scor=score;
 		addsc = new JFrame("Add");
 		JPanel pann=new JPanel();
@@ -96,7 +83,6 @@ public class Game{
 		myhscore=new JTextField(3);
 		myhscore.setEditable(false);
 		myhscore.setText(Integer.toString(score));
-		//hscore=new JTextField(10);
 		getName = new JTextField(10);
 		add = new JButton("Add");
 		add.addActionListener(new OKListener());
