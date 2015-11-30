@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="WINDOWS-1250" standalone="no"?>
+<jardesc>
+    <jar path="Prog3hazi/Hazi.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/Prog3hazi/Jarsettings.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" mainClassHandleIdentifier="=Prog3hazi/src&lt;{Main.java[Main" manifestLocation="/Prog3hazi/src/MANIFEST.mf" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/Prog3hazi/scores.ser"/>
+        <javaElement handleIdentifier="=Prog3hazi/src"/>
+        <file path="/Prog3hazi/enemybullet.png"/>
+        <file path="/Prog3hazi/icon.jpg"/>
+        <file path="/Prog3hazi/bullet.gif"/>
+        <file path="/Prog3hazi/spaceship.png"/>
+    </selectedElements>
+</jardesc>

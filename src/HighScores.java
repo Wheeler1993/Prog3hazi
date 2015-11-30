@@ -26,8 +26,8 @@ public class HighScores implements Serializable {
 		fr.setVisible(true);
 		int j=1;
 		for(Score i : scores){
-			JTextField num = new JTextField(1);
-			JTextField name = new JTextField(6);
+			JTextField num = new JTextField(2);
+			JTextField name = new JTextField(8);
 			//JTextField score = new JTextField(3);
 			name.setText(i.name+": "+Integer.toString(i.score));
 			//score.setText(Integer.toString(i.score));

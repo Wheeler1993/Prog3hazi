@@ -19,6 +19,7 @@ public class Game{
 	
 	JButton newGame;
 	JButton highScores;
+	JButton exit;
 	JButton add;
 	
 	JTextField myhscore;
@@ -33,8 +34,11 @@ public class Game{
 		pan=new JPanel();
 		highScores=new JButton("Highscores");
 		highScores.addActionListener(new HighScoreListener());
+		exit = new JButton("Exit");
+		exit.addActionListener(new ExitListener());
 		pan.add(newGame);
 		pan.add(highScores);
+		pan.add(exit);
 		//newGame.setSize(500, 30);
 		fr.add(pan);
 		fr.pack();
@@ -50,7 +54,7 @@ public class Game{
 	
 	void newGame(){
 		fr=new JFrame("Game");
-		ArrayList<Item> items = new ArrayList<Item>();
+		ArrayList<Enemy> items = new ArrayList<Enemy>();
 		SpaceShip ss = null;
 		try {
 			//items.add(new Enemy(300, 300, -2, 0, "icon.jpg"));
@@ -123,6 +127,13 @@ public class Game{
 				e1.printStackTrace();
 			}
 			addsc.dispose();
+		}
+	}
+	class ExitListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
 		}
 	}
 	
